@@ -1,0 +1,143 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dep-admin
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: ["*"] 
+  resources: ["*"]
+  verbs: ["*"]
+---  
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: dep-admin-role
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-reader
+subjects:
+- kind: ServiceAccount
+  name: dep-admin
+  namespace: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  selector:
+    app: flask
+  ports:
+  - protocol: TCP
+    port: 60
+    nodePort: 32345
+  type: NodePort
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flasksecret
+type: Opaque
+data: 
+  salt: MjEwQzYzRjkzMERDNEE5Ng==
+  key: S1NveE10UGdVdHpuV3YwZG4yb1dJZ0Nj   
+  password: UzNjcjN0UGE1NXcwcmQ=
+  database: Y2FyZGRi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      name: flask-app
+      labels:
+        app: flask
+    spec:
+      serviceAccountName: dep-admin
+      # automountServiceAccountToken: false
+      containers:
+      - name: flask
+        image: mhnamadi/noorassti:latest
+        ports:
+          - containerPort: 60  
+        env:
+          - name: MYSQL_HOST
+            value: mysql-db                   
+          - name: SALT            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: salt  
+          - name: ENC_KEY            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: key
+          - name: MYSQL_ROOT_PASSWORD            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: password
+          - name: MYSQL_DATABASE            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: database                 
+---                
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-db
+  labels:
+    app: mysql
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+  selector:
+    app: mysql  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-db
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:          
+          - name: MYSQL_ROOT_PASSWORD            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: password
+          - name: MYSQL_DATABASE            
+            valueFrom:
+              secretKeyRef:
+                name: flasksecret
+                key: database 
+        ports:
+        - containerPort: 3306
+          name: mysql                
