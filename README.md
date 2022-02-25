@@ -48,12 +48,11 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
 
 16. Securing Kubernetes Dashboard
 
-
-
                                              \|||/                                               
                    .-.________               (o o)              ________.-.                    
               ----/ \_)_______)  +------------(_)-----------+  (_______(_/ \----               
                  (    ()___)     |         Kubernetes       |     (___()     )                  
                       ()__)      |                          |      (__()                        
-              ----\___()_)       |	                         |       (_()___/----                
+              ----\___()_)       |	                        |       (_()___/----                
                                  +------------Ooo-----------+ 
+
