@@ -58,6 +58,6 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
                    (    ()___)     |         Kubernetes       |     (___()     )                  
                         ()__)      |                          |      (__()                        
                 ----\___()_)       |	                         |       (_()___/----                
-                                   +------------Ooo-----------
+                                   +------------Ooo-----------+
 
  
