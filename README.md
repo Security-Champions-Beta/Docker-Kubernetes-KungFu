@@ -38,9 +38,9 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
 
 11. Limit Direct Access to Kubernetes Nodes
 
-12. Controlling access to the Kubernetes API¶
+12. Controlling access to the Kubernetes API
 
-13. API Authentication¶
+13. API Authentication
 
 14. Restrict access to etcd
 
