@@ -1,6 +1,6 @@
-# Kubernetes-Compromise
+# Kubernetes-Compromise-KungFu
 
-A laborator for learning Kubernetes . 😆
+A laborator for learning Kubernetes Attack. 😆 🌏
 
 In this lab we illustrate attack on Kubernetes 
 
@@ -9,7 +9,7 @@ In this lab we illustrate attack on Kubernetes
 
 ## What is Kubernetes?
 
-Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.and operations. 🚀
+Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.and operations. 🚀👀
 
 
 ### Type Of Attack On Kubernetes
