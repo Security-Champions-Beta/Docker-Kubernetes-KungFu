@@ -1,0 +1,23 @@
+FROM python:3.9.1-alpine
+
+LABEL description="The first Dockerfile with a simple Flask API - no root user, COPY what is needed, no latest, only root users can write, secrets"
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN mkdir /app
+COPY api.py requirements.txt /app/
+WORKDIR /app
+
+ENV username=root
+ENV password=root
+
+RUN pip3 install -r requirements.txt
+
+RUN addgroup -S user && adduser -S user -G user --no-create-home
+RUN chmod -R 755 /app
+
+USER user
+
+ENTRYPOINT ["python3"]
+CMD ["api.py"]
