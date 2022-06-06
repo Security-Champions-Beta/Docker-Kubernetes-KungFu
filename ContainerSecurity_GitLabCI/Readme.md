@@ -33,5 +33,6 @@ Step 7: Wait for the pipeline to execute and observe the results
 
 ![4.png](4.png)
 
+![6.png](6.png)
 
 Finish :))
